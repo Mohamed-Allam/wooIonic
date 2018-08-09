@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -8,12 +7,44 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content no-padding>
+  <ion-card>
+    <ion-slides autoplay="3000" pager>
+      <ion-slide *ngFor="let number of [1,2,3,4]">
+        <img src="./assets/images/{{number}}.jpg" />
+      </ion-slide>
+    </ion-slides>
+  </ion-card>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <div id="banner">
+    <img src="./assets/images/banner2.jpg" />
+  </div>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-slides #productSlides>
+        <ion-slide *ngFor="let product of products">
+          <ion-card no-padding>
+            <img [src]="product.images[0].src" />
+            <h1 padding center>{{product.name}}</h1>
+            <div padding center [innerHTML]="product.short_description"></div>
+          </ion-card>
+
+        </ion-slide>
+      </ion-slides>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+      <ion-item *ngFor="let product of moreProducts">
+        <ion-thumbnail>
+          <img [src]="product.images[0].src" />
+        </ion-thumbnail>
+        <h2>{{product.name}}</h2>
+        <div><span [innerHTML]="product.short_description"></span> <span [innerHTML]="product.price_html"></span></div>
+  
+      </ion-item>
+    </ion-list>
 </ion-content>
