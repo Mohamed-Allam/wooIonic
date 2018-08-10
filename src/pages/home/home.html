@@ -45,7 +45,7 @@
       <h2>{{product.name}}</h2>
       <div>
         <span [innerHTML]="product.short_description.substr(0,50) + '...' "></span>
-        
+        <span [innerHTML]="product.price_html"></span>
       </div>
 
       <button ion-button clear icon item-right>
@@ -54,4 +54,10 @@
 
     </ion-item>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content>
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

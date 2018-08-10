@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, Slides, ToastController } from 'ionic-angular';
 import * as WC from "woocommerce-api"
 
 @Component({
@@ -11,12 +11,12 @@ export class HomePage {
   woocommerce: any;
   products: any[];
   page: number = 1;
-  moreProducts : any[];
-  
+  moreProducts: any[] = [];
+
 
   @ViewChild("productSlides") productSlides: Slides;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public toastCtrl:ToastController) {
 
     var thisObject = this;
 
@@ -27,47 +27,59 @@ export class HomePage {
       wpAPI: true,
       version: 'wc/v1'
     });
-    console.log("====================================");
+    console.log("==================================== Constructor");
     /* this.woocommerce.get('products', function(err, data, res) {
        console.log(data);
        console.log(res);
      });*/
 
-     this.loadMoreProducts();
+    this.loadMoreProducts(null);
     this.woocommerce.getAsync('products').then(function (data) {
       // console.log(JSON.parse(data.body));
-      console.log("============= initial");
+      console.log("============= initial call");
       thisObject.products = JSON.parse(data.body);
-      thisObject.page++;
-     // console.log(thisObject.products[0]);
+            // console.log(thisObject.products[0]);
     }, function (error) {
       console.log(error);
     });
 
   }
 
-  ionViewDidLoad(){
-    
-   setInterval(()=>{
-      if( this.productSlides.getActiveIndex() == this.productSlides.length() - 1)
-      this.productSlides.slideTo(0);
+  ionViewDidLoad() {
+
+    setInterval(() => {
+      if (this.productSlides.getActiveIndex() == this.productSlides.length() - 1)
+        this.productSlides.slideTo(0);
 
       this.productSlides.slideNext();
 
-    },3000) 
+    }, 3000)
   }
 
-  loadMoreProducts(){
+  loadMoreProducts(event) {
 
     var thisObject = this;
+  
 
-    this.woocommerce.getAsync('products?page='+this.page).then(function (data) {
-      // console.log(JSON.parse(data.body));
+    this.woocommerce.getAsync('products?page=' + this.page).then(function (data) {
+       console.log("Load More Products.");
+       thisObject.moreProducts = thisObject.moreProducts.concat(JSON.parse(data.body));
+      console.log(thisObject.moreProducts);
+      // console.log(thisObject.products[0]);
+      thisObject.page++;
+      if(event != null){
+        event.complete();
+      }
 
-      console.log("============= Load More");
-      
-      thisObject.moreProducts = JSON.parse(data.body);
-     // console.log(thisObject.products[0]);
+      if(JSON.parse(data.body).length < 10)
+      {
+        event.enable(false);
+        thisObject.toastCtrl.create({
+          message : " No More Products ",
+          duration : 5000
+        }).present();
+      }
+
     }, function (error) {
       console.log(error);
     });
