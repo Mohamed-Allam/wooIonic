@@ -36,7 +36,7 @@ export class HomePage {
      this.loadMoreProducts();
     this.woocommerce.getAsync('products').then(function (data) {
       // console.log(JSON.parse(data.body));
-      
+      console.log("============= initial");
       thisObject.products = JSON.parse(data.body);
       thisObject.page++;
      // console.log(thisObject.products[0]);
@@ -63,6 +63,8 @@ export class HomePage {
 
     this.woocommerce.getAsync('products?page='+this.page).then(function (data) {
       // console.log(JSON.parse(data.body));
+
+      console.log("============= Load More");
       
       thisObject.moreProducts = JSON.parse(data.body);
      // console.log(thisObject.products[0]);

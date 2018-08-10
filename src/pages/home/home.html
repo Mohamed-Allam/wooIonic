@@ -38,13 +38,20 @@
   </ion-grid>
 
   <ion-list>
-      <ion-item *ngFor="let product of moreProducts">
-        <ion-thumbnail>
-          <img [src]="product.images[0].src" />
-        </ion-thumbnail>
-        <h2>{{product.name}}</h2>
-        <div><span [innerHTML]="product.short_description"></span> <span [innerHTML]="product.price_html"></span></div>
-  
-      </ion-item>
-    </ion-list>
+    <ion-item *ngFor="let product of moreProducts" text-wrap>
+      <ion-thumbnail item-left>
+        <img [src]="product.images[0].src" />
+      </ion-thumbnail>
+      <h2>{{product.name}}</h2>
+      <div>
+        <span [innerHTML]="product.short_description.substr(0,50) + '...' "></span>
+        
+      </div>
+
+      <button ion-button clear icon item-right>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+
+    </ion-item>
+  </ion-list>
 </ion-content>
