@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import * as WC from "woocommerce-api"
+import { ProductsCateoryPage } from '../products-cateory/products-cateory';
 
 
 
@@ -17,6 +18,7 @@ export class MenuPage {
   woocommerce : any;
   categories : any[] = [];
   temp : any[] = []
+  @ViewChild("content2") childNavCtrl : NavController;
   
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -52,13 +54,19 @@ export class MenuPage {
           if( ! thisObject.categories.find((c) =>{ return c.id == thisObject.temp[i].id }))
                 thisObject.categories.push(thisObject.temp[i])
         
-        
-      }
+         }
     }
       
+    console.log(" Categories === === === === === === === ");
+    console.log(thisObject.categories);
     }, function (error) {
       console.log(error);
     });
+  }
+
+  openCategoryPage(category){
+    this.childNavCtrl.setRoot(ProductsCateoryPage,{"category" : category});
+  // this.navCtrl.push(ProductsCateoryPage,{"category" : category});
   }
 
   ionViewDidLoad() {

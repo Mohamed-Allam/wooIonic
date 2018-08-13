@@ -9,12 +9,16 @@ import { HomePage } from '../pages/home/home';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MenuPage } from '../pages/menu/menu';
+import { ProductsCateoryPage } from '../pages/products-cateory/products-cateory';
+import { ProductDetailsPage } from '../pages/product-details/product-details';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    MenuPage
+    MenuPage,
+    ProductsCateoryPage,
+    ProductDetailsPage
     
   ],
   imports: [
@@ -25,7 +29,9 @@ import { MenuPage } from '../pages/menu/menu';
   entryComponents: [
     MyApp,
     HomePage,
-    MenuPage
+    MenuPage,
+    ProductsCateoryPage,
+    ProductDetailsPage
     
   ],
   providers: [
