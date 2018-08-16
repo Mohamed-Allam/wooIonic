@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import * as WC from  "woocommerce-api";
+import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import * as WC from "woocommerce-api";
+import { Storage } from "@ionic/storage";
+import { CartPage } from '../cart/cart';
+
 
 @Component({
   selector: 'page-product-details',
@@ -8,17 +11,18 @@ import * as WC from  "woocommerce-api";
 })
 export class ProductDetailsPage {
 
-  product:any;
+  product: any;
   woocommerce: any;
-  reviews : any[] = []
+  reviews: any[] = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,public toastCtrl:ToastController,
+  public modalCtrl:ModalController) {
     this.product = this.navParams.get("product");
     console.log(this.product);
 
     let thisObject = this;
 
-     this.woocommerce = WC({
+    this.woocommerce = WC({
       url: "http://centstechnology.com/",
       consumerKey: "ck_a63f4e6cfc8d5a17d6de5a71fd6dfa1f74e6ac69",
       consumerSecret: "cs_f446377fd510d767d5fdc4a31ae7c9fd8180bafa",
@@ -26,8 +30,8 @@ export class ProductDetailsPage {
       version: 'wc/v1'
     });
 
-    this.woocommerce.getAsync('products/'+this.product.id + '/reviews').then(function (data) {
-      
+    this.woocommerce.getAsync('products/' + this.product.id + '/reviews').then(function (data) {
+
       thisObject.reviews = JSON.parse(data.body);
       console.log(thisObject.reviews);
     }, function (error) {
@@ -35,8 +39,62 @@ export class ProductDetailsPage {
     });
   }
 
+  addToCart(product) {
+
+    this.storage.get("cart").then((data) => {
+
+      let added = false;
+      console.log(data);
+      if(data == null || data.length == 0){
+        console.log(" New cart is created ! ");
+        data = [];
+        let item = {
+          qty : 1,
+          amount : parseFloat(product.price),
+          product : product
+        };
+        data.push(item);
+      }
+      else{
+
+
+
+        for(let i = 0; i < data.length ; i++){
+          if(product.id == data[i].product.id){
+            console.log(" Product found already ");
+            data[i].qty++;
+            data[i].amount += parseFloat(product.price);
+            added = true;
+
+          }
+        }
+
+        if(!added){
+          let item = {
+            qty : 1,
+            amount : parseFloat(product.price),
+            product : product
+          };
+          data.push(item);
+        }
+      }
+
+      this.storage.set("cart",data);
+      console.log("cart updated !");
+      console.log(data);
+      this.toastCtrl.create({
+        message:"Cart Updated",
+        duration : 3000
+      }).present();
+    });
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailsPage');
+  }
+
+  openCart(){
+    this.modalCtrl.create(CartPage).present();
   }
 
 }
