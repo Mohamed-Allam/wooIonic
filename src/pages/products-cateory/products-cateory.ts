@@ -29,11 +29,11 @@ export class ProductsCateoryPage {
     this.category = this.navParams.get("category");
 
     this.woocommerce = WC({
-      url: "http://centstechnology.com/",
-      consumerKey: "ck_a63f4e6cfc8d5a17d6de5a71fd6dfa1f74e6ac69",
-      consumerSecret: "cs_f446377fd510d767d5fdc4a31ae7c9fd8180bafa",
+      url: "https://centstechnology.com/",
+      consumerKey: "ck_9231153d89e40dd9ba4236b2a2a8c72bb2e7763c",
+      consumerSecret: "cs_4dbe4ba98444919a2857031acefcb88643c80743",
       wpAPI: true,
-      version: 'wc/v1'
+      version: 'wc/v2'
     });
 
     /* this.woocommerce.get('products', function(err, data, res) {
