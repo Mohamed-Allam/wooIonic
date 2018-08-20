@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 import { MenuPage } from '../pages/menu/menu';
+import { SignupPage } from '../pages/signup/signup';
 
 @Component({
   templateUrl: 'app.html'
@@ -12,7 +13,8 @@ import { MenuPage } from '../pages/menu/menu';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = MenuPage;
+  //rootPage: any = MenuPage;
+  rootPage: any = SignupPage;
 
   
 

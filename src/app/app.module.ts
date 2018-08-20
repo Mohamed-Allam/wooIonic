@@ -14,6 +14,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { ProductsCateoryPage } from '../pages/products-cateory/products-cateory';
 import { ProductDetailsPage } from '../pages/product-details/product-details';
 import { CartPage} from '../pages/cart/cart';
+import { SignupPage } from '../pages/signup/signup';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CartPage} from '../pages/cart/cart';
     MenuPage,
     ProductsCateoryPage,
     ProductDetailsPage,
-    CartPage
+    CartPage,
+    SignupPage
 
   ],
   imports: [
@@ -37,7 +39,8 @@ import { CartPage} from '../pages/cart/cart';
     MenuPage,
     ProductsCateoryPage,
     ProductDetailsPage,
-    CartPage
+    CartPage,
+    SignupPage
 
   ],
   providers: [
